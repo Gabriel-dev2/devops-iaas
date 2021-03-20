@@ -71,6 +71,6 @@ def router(event):
     else:
         raise AttributeError(f'Resource {resource} not found')
 
-    response_body = action.hander(body, response_body)
+    response_body = action.handler(body, response_body)
 
     return response_body

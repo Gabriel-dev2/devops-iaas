@@ -28,3 +28,4 @@ class APIActionComment(Action):
         issue = request.get('branch')
         data = self.__add_comment(issue, comment)
         response['data'] = {'result': data}
+        return response
