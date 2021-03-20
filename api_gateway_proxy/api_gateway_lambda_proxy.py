@@ -8,6 +8,7 @@ from lambda_utils.validator import ParamsValidator
 
 # actions
 from api_action_version import APIActionVersion
+from api_action_comment import APIActionComment
 
 env_validator = ParamsValidator(os.environ)
 logger = lambda_logger.Logger(__name__, env_validator.get_parameter('LOGGIN_LEVEL'), enable_xray=True)
@@ -41,6 +42,7 @@ def format_error_message(traceback_message, why,response_body):
     response_body['cause'] = str(why)
     response_body['traceback'] = str(traceback_message)
     logger.error(__error_message(str(why), traceback_message))
+    return response_body
 
 def __error_message(message, traceback_msg):
     return f'Lambda function failed to execute: {message}: {traceback_msg}'
@@ -62,8 +64,7 @@ def router(event):
     if resource == '/version':
         action = APIActionVersion(logger)
     elif resource == '/issue/comment':
-        # implementar action de comentario
-        pass
+        action = APIActionComment(logger)
     elif resource == '/project/release/{projectName}':
         # implementar action de releases
         pass
